@@ -320,7 +320,7 @@ export default {
     const isSpinning = ref(false);
     const rouletteRotation = ref(0);
     const selectedConsequence = ref("");
-    const hasUsedSpin = ref(false); // Track if spin again has been used
+    const hasUsedSpin = ref(false); 
 
     const timeOptions = [
       { time: 24, label: "Pro" },
@@ -349,11 +349,11 @@ export default {
           currentTime.value--;
         } else {
           stop();
-          // Check if auto reset is enabled and show confirmation dialog
+    
           if (autoResetEnabled.value) {
             setTimeout(() => {
               showConfirmDialog.value = true;
-            }, 1000); // Show dialog 1 second after timer ends
+            }, 1000); 
           }
         }
       }, 1000);
@@ -376,14 +376,13 @@ export default {
       showConfirmDialog.value = false;
 
       if (drankShot) {
-        // If yes, proceed with auto reset
+
         reset();
         start();
       } else {
-        // If no, show roulette for consequences
         showRoulette.value = true;
-        selectedConsequence.value = ""; // Reset consequence when showing roulette
-        hasUsedSpin.value = false; // Reset spin again availability
+        selectedConsequence.value = ""; 
+        hasUsedSpin.value = false;
       }
     };
 
@@ -391,33 +390,32 @@ export default {
       if (isSpinning.value) return;
 
       isSpinning.value = true;
-      selectedConsequence.value = ""; // Clear previous result
-      const spins = 5 + Math.random() * 5; // 5-10 full rotations
+      selectedConsequence.value = ""; 
+      const spins = 5 + Math.random() * 5; 
       const finalRotation = spins * 360 + Math.random() * 360;
       rouletteRotation.value += finalRotation;
 
       setTimeout(() => {
         isSpinning.value = false;
-        // Calculate which consequence was selected
         const normalizedRotation = rouletteRotation.value % 360;
         const segmentSize = 360 / consequences.length;
         const selectedIndex =
           Math.floor((360 - normalizedRotation) / segmentSize) % consequences.length;
         selectedConsequence.value = consequences[selectedIndex];
-      }, 3000); // 3 second spin duration
+      }, 3000); 
     };
 
     const spinAgain = () => {
-      hasUsedSpin.value = true; // Mark spin again as used
-      selectedConsequence.value = null; // Clear current result
-      spinRoulette(); // Spin the wheel again
+      hasUsedSpin.value = true; 
+      selectedConsequence.value = null; 
+      spinRoulette(); 
     };
 
     const closeRoulette = () => {
       showRoulette.value = false;
       selectedConsequence.value = "";
-      hasUsedSpin.value = false; // Reset for next time
-      reset(); // Reset the timer
+      hasUsedSpin.value = false; 
+      reset(); 
     };
 
     // Roulette helper functions
@@ -488,7 +486,6 @@ export default {
       }
 
       autoResetEnabled.value = true;
-      // Note: Removed the old auto-reset logic since we're now using the confirmation dialog
     };
 
     // Cleanup on component unmount
