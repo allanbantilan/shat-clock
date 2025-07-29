@@ -115,17 +115,17 @@
         <div class="flex flex-col space-y-4 flex-1">
           <button
             @click="reset"
-            class="py-3 rounded-full font-semibold bg-red-300 hover:bg-red-400 focus:outline-none focus:ring-4 focus:ring-gray-300 text-red-700 shadow-lg transition-all duration-300"
+            class="py-2 rounded-full font-semibold bg-red-300 hover:bg-red-400 focus:outline-none focus:ring-4 focus:ring-gray-300 text-red-700 shadow-lg transition-all duration-300"
           >
             Reset
           </button>
           <button
             @click="startAutoReset"
-            class="w-full py-3 rounded-full font-semibold bg-blue-300 hover:bg-blue-400 focus:outline-none focus:ring-4 focus:ring-gray-300 text-blue-700 shadow-lg transition-all duration-300 relative"
+            class="w-full py-2 rounded-full font-semibold bg-blue-300 hover:bg-blue-400 focus:outline-none focus:ring-4 focus:ring-gray-300 text-blue-700 shadow-lg transition-all duration-300 relative"
           >
             Consequence Mode
             <span
-              class="absolute top-2 right-4 w-3 h-3 rounded-full"
+              class="absolute top-1 right-4 w-3 h-3 rounded-full"
               :class="autoResetEnabled ? 'bg-emerald-600' : 'bg-red-500'"
             ></span>
           </button>
@@ -133,7 +133,7 @@
       </div>
 
       <!-- Status -->
-      <div class="text-center mt-4">
+      <div class="text-center mb-8">
         <span
           :class="[
             'inline-flex items-center justify-center px-4 py-1 rounded-full text-sm font-semibold tracking-wider shadow-sm select-none',
@@ -152,8 +152,8 @@
           ></span>
           {{ isRunning ? "Running" : currentTime <= 0 ? "Time Up!" : "Stopped" }}
         </span>
+        <p class="text-xs text-gray-500 italic">Created By: Allan Bantilan</p>
       </div>
-     <p class="text-center text-xs text-gray-500 mt-2">Created by: Allan Bantilan</p>
     </div>
 
     <!-- Confirmation Dialog -->
@@ -320,7 +320,7 @@ export default {
     const isSpinning = ref(false);
     const rouletteRotation = ref(0);
     const selectedConsequence = ref("");
-    const hasUsedSpin = ref(false); 
+    const hasUsedSpin = ref(false);
 
     const timeOptions = [
       { time: 24, label: "Pro" },
@@ -328,7 +328,12 @@ export default {
       { time: 100, label: "Palugi" },
     ];
 
-    const consequences = ["Take 2 shots instead"];
+    const consequences = [
+      "Shat kag duha, buanga ka",
+      "Syagit og YAWA",
+      "Di ka mo tingog isa ka tuyokan",
+      "Palit og Pulutan, #Palugi",
+    ];
 
     const progressPercentage = computed(() => {
       return ((selectedTime.value - currentTime.value) / selectedTime.value) * 100;
@@ -349,11 +354,11 @@ export default {
           currentTime.value--;
         } else {
           stop();
-    
+
           if (autoResetEnabled.value) {
             setTimeout(() => {
               showConfirmDialog.value = true;
-            }, 1000); 
+            }, 1000);
           }
         }
       }, 1000);
@@ -376,12 +381,11 @@ export default {
       showConfirmDialog.value = false;
 
       if (drankShot) {
-
         reset();
         start();
       } else {
         showRoulette.value = true;
-        selectedConsequence.value = ""; 
+        selectedConsequence.value = "";
         hasUsedSpin.value = false;
       }
     };
@@ -390,8 +394,8 @@ export default {
       if (isSpinning.value) return;
 
       isSpinning.value = true;
-      selectedConsequence.value = ""; 
-      const spins = 5 + Math.random() * 5; 
+      selectedConsequence.value = "";
+      const spins = 5 + Math.random() * 5;
       const finalRotation = spins * 360 + Math.random() * 360;
       rouletteRotation.value += finalRotation;
 
@@ -402,20 +406,20 @@ export default {
         const selectedIndex =
           Math.floor((360 - normalizedRotation) / segmentSize) % consequences.length;
         selectedConsequence.value = consequences[selectedIndex];
-      }, 3000); 
+      }, 3000);
     };
 
     const spinAgain = () => {
-      hasUsedSpin.value = true; 
-      selectedConsequence.value = null; 
-      spinRoulette(); 
+      hasUsedSpin.value = true;
+      selectedConsequence.value = null;
+      spinRoulette();
     };
 
     const closeRoulette = () => {
       showRoulette.value = false;
       selectedConsequence.value = "";
-      hasUsedSpin.value = false; 
-      reset(); 
+      hasUsedSpin.value = false;
+      reset();
     };
 
     // Roulette helper functions
