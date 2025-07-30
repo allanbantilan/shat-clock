@@ -329,10 +329,13 @@ export default {
     ];
 
     const consequences = [
-      "Shat kag duha, buanga ka",
-      "Syagit og YAWA",
-      "Di ka mo tingog isa ka tuyokan",
-      "Palit og Pulutan, #Palugi",
+      "Drink two shots",
+      "Do 10 push-ups",
+      "Do a silly dance for 5 seconds",
+      "Share a secret",
+      "Take a selfie and send it to someone random",
+      "Do 5 jumping jacks",
+      "Let the group choose your next drink",
     ];
 
     const progressPercentage = computed(() => {
